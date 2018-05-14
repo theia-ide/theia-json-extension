@@ -1,0 +1,31 @@
+{
+  "name": "@theia/json",
+  "keywords": [
+    "theia-extension"
+  ],
+  "version": "0.0.0",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "@theia/core": "next",
+    "vscode-json-languageserver-bin": "^1.0.1"
+  },
+  "devDependencies": {
+    "rimraf": "*",
+    "typescript": "*"
+  },
+  "scripts": {
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf lib",
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "theiaExtensions": [
+    {
+      "frontend": "lib/browser/web-frontend-module",
+      "backend": "lib/node/web-backend-module"
+    }
+  ]
+}
