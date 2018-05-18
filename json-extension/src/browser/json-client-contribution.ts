@@ -46,7 +46,8 @@ export class JsonClientContribution extends BaseLanguageClientContribution {
     
     protected async initializeJsonSchemaAssociations() {
         const client = await this.languageClient;
-        const response = await fetch('http://schemastore.org/api/json/catalog.json');
+        const url = `${window.location.protocol}//schemastore.azurewebsites.net/api/json/catalog.json`;
+        const response = await fetch(url);
         const schemas: SchemaData[] = (await response.json()).schemas!;
         const registry: {[pattern: string]: string[]} = {};
         for (const s of schemas) {
