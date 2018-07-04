@@ -5,12 +5,14 @@
   ],
   "version": "0.0.0",
   "files": [
+    "data",
     "lib",
     "src"
   ],
   "dependencies": {
     "@theia/core": "next",
-    "vscode-json-languageserver-bin": "^1.0.1"
+    "@theia/monaco": "next",
+    "vscode-json-languageserver": "^1.0.1"
   },
   "devDependencies": {
     "rimraf": "*",
