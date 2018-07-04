@@ -8,7 +8,10 @@
 import { ContainerModule } from "inversify";
 import { LanguageClientContribution } from "@theia/languages/lib/browser";
 import { JsonClientContribution } from './json-client-contribution';
+import { JsonGrammarContribution } from "./json-grammar-contribution";
+import { LanguageGrammarDefinitionContribution } from "@theia/monaco/lib/browser/textmate";
 
 export default new ContainerModule(bind => {
     bind(LanguageClientContribution).to(JsonClientContribution).inSingletonScope();
+    bind(LanguageGrammarDefinitionContribution).to(JsonGrammarContribution).inSingletonScope();
 });
