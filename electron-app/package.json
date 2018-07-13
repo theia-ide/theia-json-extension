@@ -15,7 +15,7 @@
     "@theia/markers": "next",
     "@theia/monaco": "next",
     "@theia/typescript": "next",
-    "@theia/json": "0.0.0"
+    "@theia/json": "0.1.1"
   },
   "devDependencies": {
     "@theia/cli": "next"
