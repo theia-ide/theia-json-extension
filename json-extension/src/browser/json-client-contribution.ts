@@ -6,7 +6,7 @@
  */
 
 import { injectable, inject } from "inversify";
-import { BaseLanguageClientContribution, Workspace, Languages, LanguageClientFactory, ILanguageClient } from '@theia/languages/lib/browser';
+import { BaseLanguageClientContribution, Workspace, Languages, LanguageClientFactory, ILanguageClient, DidChangeConfigurationNotification } from '@theia/languages/lib/browser';
 import { JSON_LANGUAGE_ID, JSON_LANGUAGE_NAME } from '../common';
 import { ResourceProvider } from "@theia/core";
 import URI from "@theia/core/lib/common/uri";
@@ -34,22 +34,38 @@ export class JsonClientContribution extends BaseLanguageClientContribution {
 
     protected onReady(languageClient: ILanguageClient): void {
         // handle content request
-		languageClient.onRequest('vscode/content', async (uriPath: string) => {
+        languageClient.onRequest('vscode/content', async (uriPath: string) => {
             const uri = new URI(uriPath);
             const resource = await this.resourceProvider(uri);
             const text = await resource.readContents();
-			return text;
-		});
+            return text;
+        });
         super.onReady(languageClient);
-        setTimeout(() => this.initializeJsonSchemaAssociations(), 0);
+        setTimeout(() => {
+            this.enableFormatting();
+            this.initializeJsonSchemaAssociations();
+        });
     }
-    
-    protected async initializeJsonSchemaAssociations() {
+
+    protected async enableFormatting(): Promise<void> {
+        const client = await this.languageClient;
+        client.sendNotification(DidChangeConfigurationNotification.type, {
+            settings: {
+                json: {
+                    format: {
+                        enable: true
+                    }
+                }
+            }
+        });
+    }
+
+    protected async initializeJsonSchemaAssociations(): Promise<void> {
         const client = await this.languageClient;
         const url = `${window.location.protocol}//schemastore.azurewebsites.net/api/json/catalog.json`;
         const response = await fetch(url);
         const schemas: SchemaData[] = (await response.json()).schemas!;
-        const registry: {[pattern: string]: string[]} = {};
+        const registry: { [pattern: string]: string[] } = {};
         for (const s of schemas) {
             if (s.fileMatch) {
                 for (const p of s.fileMatch) {
