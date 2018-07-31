@@ -97,7 +97,7 @@ export class JsonGrammarContribution implements LanguageGrammarDefinitionContrib
         monaco.languages.setLanguageConfiguration('jsonc', this.config);
 
         const jsoncGrammar = require('../../data/jsonc.tmLanguage.json');
-        registry.registerTextMateGrammarScope('source.cpp', {
+        registry.registerTextMateGrammarScope('source.json.comments', {
             async getGrammarDefinition() {
                 return {
                     format: 'json',
