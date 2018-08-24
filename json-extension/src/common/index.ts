@@ -7,3 +7,6 @@
 
 export const JSON_LANGUAGE_ID = 'json';
 export const JSON_LANGUAGE_NAME = 'JSON';
+
+export const JSONC_LANGUAGE_ID = 'jsonc';
+export const JSONC_LANGUAGE_NAME = 'JSONC';

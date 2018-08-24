@@ -7,7 +7,8 @@
 
 import { injectable, inject } from "inversify";
 import { BaseLanguageClientContribution, Workspace, Languages, LanguageClientFactory, ILanguageClient, DidChangeConfigurationNotification } from '@theia/languages/lib/browser';
-import { JSON_LANGUAGE_ID, JSON_LANGUAGE_NAME } from '../common';
+import { DocumentSelector } from '@theia/languages/lib/common';
+import { JSON_LANGUAGE_ID, JSON_LANGUAGE_NAME, JSONC_LANGUAGE_ID } from '../common';
 import { ResourceProvider } from "@theia/core";
 import URI from "@theia/core/lib/common/uri";
 
@@ -28,8 +29,13 @@ export class JsonClientContribution extends BaseLanguageClientContribution {
 
     protected get globPatterns() {
         return [
-            '**/*.json'
+            '**/*.json',
+            '**/*.jsonc',
         ];
+    }
+
+    protected get documentSelector(): DocumentSelector | undefined {
+        return [this.id, JSONC_LANGUAGE_ID];
     }
 
     protected onReady(languageClient: ILanguageClient): void {
