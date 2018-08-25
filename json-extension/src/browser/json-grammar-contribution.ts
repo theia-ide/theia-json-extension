@@ -16,7 +16,7 @@
 
 import { LanguageGrammarDefinitionContribution, TextmateRegistry } from "@theia/monaco/lib/browser/textmate";
 import { injectable } from "inversify";
-import { JSON_LANGUAGE_ID } from "../common";
+import { JSON_LANGUAGE_ID, JSONC_LANGUAGE_ID } from "../common";
 
 @injectable()
 export class JsonGrammarContribution implements LanguageGrammarDefinitionContribution {
@@ -85,7 +85,7 @@ export class JsonGrammarContribution implements LanguageGrammarDefinitionContrib
 
         // jsonc
         monaco.languages.register({
-            id: 'jsonc',
+            id: JSONC_LANGUAGE_ID,
             "aliases": [
                 "JSON with Comments"
             ],
@@ -94,7 +94,7 @@ export class JsonGrammarContribution implements LanguageGrammarDefinitionContrib
             ]
         });
 
-        monaco.languages.setLanguageConfiguration('jsonc', this.config);
+        monaco.languages.setLanguageConfiguration(JSONC_LANGUAGE_ID, this.config);
 
         const jsoncGrammar = require('../../data/jsonc.tmLanguage.json');
         registry.registerTextMateGrammarScope('source.json.comments', {
@@ -105,6 +105,6 @@ export class JsonGrammarContribution implements LanguageGrammarDefinitionContrib
                 };
             }
         });
-        registry.mapLanguageIdToTextmateGrammar('jsonc', 'source.json.comments');
+        registry.mapLanguageIdToTextmateGrammar(JSONC_LANGUAGE_ID, 'source.json.comments');
     }
 }
